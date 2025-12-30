@@ -11,7 +11,7 @@ O objetivo é demonstrar capacidade de estruturar um **monorepo**, modelar um do
 
 ### Visão Geral (ASCII)
 
-<img width="465" height="482" alt="image" src="https://github.com/user-attachments/assets/a3b8af5f-1a15-4f79-aff2-1dc7b36fb5fa" />
+<img width="463" height="479" alt="image" src="https://github.com/user-attachments/assets/29a0916b-a4b4-4e11-bf83-33d97390a356" />
 
 ---
 
