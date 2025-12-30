@@ -1,0 +1,6 @@
+{
+  "name": "@jg/types",
+  "version": "1.0.0",
+  "private": true,
+  "types": "dist/index.d.ts"
+}

@@ -1,0 +1,91 @@
+@baseUrl = http://localhost:3001
+
+### register
+# @name register
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+  "username": "Teste12",
+  "email": "teste3@gmail.com",
+  "password": "123456"
+}
+
+###
+
+### authenticate
+# @name authenticate
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "teste1@gmail.com",
+  "password": "123456"
+}
+
+###
+
+@accessToken = {{ authenticate.response.body.accessToken }}
+@refreshToken = {{ authenticate.response.cookie.refreshToken }}
+@taskId = {{ createTask.response.body.id }}
+
+###
+
+### refresh token
+GET {{baseUrl}}/api/auth/refresh
+Content-Type: application/json
+Cookie: refreshToken={{ refreshToken }}
+
+
+### create task
+# @name createTask
+POST {{baseUrl}}/api/tasks
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Tarefa mínima",
+  "description": "TESTE",
+  "priority": "MEDIUM",
+  "status": "TODO",
+  "assignees": [
+    "396d42aa-ecff-4832-9584-29ee52453098", 
+    "510b2727-cf93-487b-961e-b62c6e82d5ed"
+  ]
+}
+
+### update task
+PUT {{baseUrl}}/api/tasks/{{taskId}}
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "Tarefa atualizada",
+  "priority": "HIGH",
+  "status": "IN_PROGRESS"
+}
+
+### delete task
+DELETE {{baseUrl}}/api/tasks/{{taskId}}
+Authorization: Bearer {{accessToken}}
+
+### get task
+GET {{baseUrl}}/api/tasks/{{taskId}}
+Authorization: Bearer {{accessToken}}
+
+### list tasks
+GET {{baseUrl}}/api/tasks?page=1&size=10
+Authorization: Bearer {{accessToken}}
+
+### create comment
+POST {{baseUrl}}/api/tasks/{{taskId}}/comments
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "content": "Comentário de teste"
+}
+
+### list comments
+GET {{baseUrl}}/api/tasks/{{taskId}}/comments?page=1&size=5
+Authorization: Bearer {{accessToken}}
