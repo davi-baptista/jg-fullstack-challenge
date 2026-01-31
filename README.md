@@ -1,238 +1,123 @@
-# 🧩 Jungle Gaming — Sistema de Gestão de Tarefas Colaborativo
+# 🚀 TaskFlow - Sistema de Gestão de Tarefas Colaborativo
 
-Desafio Full-stack Júnior — Sistema de Gestão de Tarefas Colaborativo
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![NestJS](https://img.shields.io/badge/NestJS-E0234E?style=flat-square&logo=nestjs&logoColor=white)](https://nestjs.com/)
+[![React](https://img.shields.io/badge/React-20232A?style=flat-square&logo=react&logoColor=61DAFB)](https://reactjs.org/)
+[![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)](https://www.docker.com/)
+[![RabbitMQ](https://img.shields.io/badge/RabbitMQ-FF6600?style=flat-square&logo=rabbitmq&logoColor=white)](https://www.rabbitmq.com/)
 
-Este projeto foi desenvolvido como parte do processo seletivo para a vaga de **Full-stack Developer Júnior** na Jungle Gaming.  
-O objetivo é demonstrar capacidade de estruturar um **monorepo**, modelar um domínio simples, construir uma **UI funcional** e integrar serviços usando **mensageria e WebSocket**.
+Sistema de gestão de tarefas colaborativo com microserviços, comunicação via RabbitMQ e notificações em tempo real via WebSocket.
 
----
+## 📋 Visão Geral
 
-## 🏗️ Arquitetura
+Arquitetura moderna com 4 microserviços independentes comunicando-se assincronamente:
 
-### Visão Geral (ASCII)
+<img width="1024" height="1150" alt="Visão geral da arquitetura de microserviços" src="https://github.com/user-attachments/assets/3bf7fd5e-bb31-494f-be05-9fc938760459" />
 
-<img width="463" height="479" alt="image" src="https://github.com/user-attachments/assets/29a0916b-a4b4-4e11-bf83-33d97390a356" />
+## 🎯 Funcionalidades
 
----
+### ✅ Implementado
+- **🔐 Autenticação JWT** com refresh tokens
+- **📋 CRUD completo** de tarefas com múltiplos assignees
+- **💬 Comentários em tempo real** por tarefa
+- **🔔 Notificações WebSocket** para alterações
+- **📊 Histórico de auditoria** de alterações
+- **🐳 Docker Compose** para orquestração
 
-## 📦 Monorepo
+### 🏗️ Stack Técnica
+| Camada | Tecnologias |
+|--------|------------|
+| **Frontend** | React, TanStack Router/Query, shadcn/ui, Socket.IO |
+| **Backend** | NestJS, TypeORM, PostgreSQL, JWT, Swagger |
+| **Mensageria** | RabbitMQ para comunicação entre serviços |
+| **Infra** | Docker, Docker Compose, Turborepo, pnpm |
 
-O projeto utiliza **monorepo com pnpm workspaces** e **Turborepo**, conforme esperado no desafio.
+## 🚀 Começando
 
+### Pré-requisitos
+- Docker & Docker Compose
+- Node.js 18+
+- pnpm AAA npm install -g pnpm AAA
+
+### Instalação Rápida
 ```
-apps/
-├── web/
-├── api-gateway/
-├── auth-service/
-├── tasks-service/
-└── notifications-service/
+# 1. Configurar variáveis de ambiente
+cp apps/*/.env.example apps/*/.env
 
-packages/
-├── types/
-├── utils/
-├── eslint-config/
-└── tsconfig/
-```
-
----
-
-## 🛠️ Stack Utilizada
-
-### Frontend
-- React.js
-- TanStack Router
-- TanStack Query
-- Zustand (auth)
-- react-hook-form + zod
-- shadcn/ui
-- Tailwind CSS
-- Socket.IO client
-- Vite
-
-### Backend
-- NestJS
-- TypeORM + PostgreSQL
-- RabbitMQ (microservices)
-- JWT (access + refresh)
-- WebSocket (Socket.IO)
-- Swagger/OpenAPI
-- class-validator / class-transformer
-- Rate limiting no API Gateway
-
-### Infra
-- Docker
-- docker-compose
-- pnpm workspaces
-- Turborepo
-
----
-
-## ⚠️ Importante — Gerenciador de Pacotes
-
-Este projeto **exige o uso de pnpm**, pois utiliza **workspaces**.
-
-Não utilize npm ou yarn.
-
-Instalação do pnpm (caso necessário):
-
-```
-npm install -g pnpm
-```
-
----
-
-## 🚀 Como Rodar o Projeto
-
-### 1️⃣ Copiar .env.example para .env em cada microserviço
-
-```
-cp apps/web/.env.example apps/web/.env
-```
-```
-cp apps/api-gateway/.env.example apps/api-gateway/.env
-```
-```
-cp apps/auth-service/.env.example apps/auth-service/.env
-```
-```
-cp apps/tasks-service/.env.example apps/tasks-service/.env
-```
-```
-cp apps/notifications-service/.env.example apps/notifications-service/.env
-```
-
-### 2️⃣ Subir infraestrutura
-
-```
+# 2. Iniciar containers
 docker-compose up -d
+
+# 3. Acessar
+# Frontend: http://localhost:3000
+# API Docs: http://localhost:3001/api/docs
 ```
 
-Frontend disponível em:
+### Comandos Úteis
 ```
-http://localhost:3000
+# Desenvolvimento
+pnpm install          # Instalar dependências
+pnpm dev              # Rodar tudo localmente
+pnpm build            # Build de todos os serviços
+
+# Docker
+docker-compose up --build  # Build e rodar
+docker-compose down        # Parar serviços
 ```
 
-
-Swagger do Gateway:
+## 📁 Estrutura do Projeto
 ```
-http://localhost:3001/api/docs
+taskflow-microservices/
+├── apps/
+│   ├── web/                 # Frontend React
+│   ├── api-gateway/         # Gateway HTTP + WebSocket
+│   ├── auth-service/        # Autenticação
+│   ├── tasks-service/       # Tarefas e comentários
+│   └── notifications-service/ # Notificações
+├── packages/                # Código compartilhado
+└── docker-compose.yml       # Orquestração
 ```
 
----
+## 🔗 Endpoints Principais
 
-## 🔐 Autenticação
+| Método | Endpoint | Descrição |
+|--------|----------|-----------|
+| POST | `/api/auth/register` | Registrar usuário |
+| POST | `/api/auth/login` | Login |
+| GET | `/api/tasks` | Listar tarefas |
+| POST | `/api/tasks` | Criar tarefa |
+| GET | `/api/tasks/:id` | Detalhes da tarefa |
+| POST | `/api/tasks/:id/comments` | Adicionar comentário |
 
-- Cadastro e login via API Gateway
-- JWT access token (15 min)
-- JWT refresh token (7 dias) via cookie httpOnly
-- Refresh automático no frontend
-- Rotas protegidas via guards
+## 🔔 Eventos WebSocket
+- `task:created` - Nova tarefa
+- `task:updated` - Tarefa atualizada  
+- `task:deleted` - Tarefa removida
+- `comment:new` - Novo comentário
 
-O frontend extrai o `userId` diretamente do JWT (`sub`), garantindo consistência com o backend.
+## 🎯 Decisões Técnicas
 
----
+### Arquitetura
+- **Microserviços** com banco de dados isolado por serviço
+- **API Gateway** como ponto único de entrada
+- **RabbitMQ** para comunicação assíncrona entre serviços
+- **WebSocket** para notificações em tempo real
 
-## 📄 Funcionalidades Implementadas
+### Segurança
+- JWT com tokens de acesso (15min) e refresh (7 dias)
+- Cookies HTTP-only para refresh tokens
+- Rate limiting (10 req/seg) no gateway
+- Validação de entrada em todas as camadas
 
-### Autenticação
-- Login
-- Register
-- Logout
-- Refresh automático
+## 📈 Próximos Passos
+- [ ] Testes unitários e e2e
+- [ ] Sistema de busca e filtros avançados
+- [ ] Upload de arquivos
+- [ ] Dashboard com métricas
 
-### Tasks
-- Criar task
-- Listar tasks (paginação)
-- Detalhe da task
-- Atualizar status, prioridade e assignees
-- Deletar task
-- Histórico de alterações (audit log simplificado)
-
-### Comentários
-- Criar comentário
-- Listar comentários por task
-- Atualização em tempo real
-
-### Notificações em Tempo Real
-Eventos disparados via RabbitMQ e entregues por WebSocket:
-- TASK_CREATED
-- TASK_UPDATED
-- TASK_DELETED
-- TASK_COMMENT_CREATED
-
-> O backend não envia notificações para o usuário que originou a ação, apenas para os demais assignees.
+## 👨‍💻 Autor
+**Davi Baptista**  
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://linkedin.com/in/davi-baptista)
+[![GitHub](https://img.shields.io/badge/GitHub-100000?style=flat-square&logo=github&logoColor=white)](https://github.com/davi-baptista)
 
 ---
-
-## 🎨 UI / UX
-
-- Mínimo de 5 componentes do shadcn/ui
-- Tailwind CSS para layout
-- Skeleton loaders (shimmer effect)
-- Toast notifications
-- Estados de loading e erro
-- UI simples, limpa e responsiva
-
----
-
-## 📌 Decisões Técnicas e Trade-offs
-
-### Ausência de Rotas Públicas de Usuários
-O desafio não exige explicitamente um endpoint de listagem de usuários (`/users`).
-
-Decisão:
-- Não expor `/api/users`
-- Evitar acoplamento direto entre serviços
-- Manter o auth-service responsável pelo domínio de usuários
-
-### Assignees na Criação da Task
-- Ao criar uma task, o usuário autenticado é automaticamente definido como assignee
-- Outros assignees podem ser adicionados posteriormente via edição
-
-Motivação:
-- Simplificar o fluxo inicial
-- Evitar dependência de listagem global de usuários
-- Manter o escopo alinhado ao desafio
-
----
-
-## ⚠️ Problemas Conhecidos e Melhorias Futuras
-
-### Problemas Conhecidos
-- Não há busca avançada de tarefas
-- Não há listagem pública de usuários
-
-### Melhorias Futuras
-- Criar um rotas para users
-- Permitir seleção de assignees na criação
-- Adicionar testes e2e
-- Filtros e busca avançada
-
----
-
-## ⏱️ Tempo Gasto (Estimativa)
-
-| Parte | Tempo |
-|------|------|
-| Estudos e planejamento (arquitetura, stack, fluhxo) | ~2 dias |
-| Backend (microservices, RabbitMQ, WebSocket, auth) | ~5 dias |
-| Frontend (UI, rotas, estado, WebSocket) | ~2 dias |
-| Ajustes finais, debug e documentação | ~1 dia |
-| **Total aproximado** | **~10 dias** |
-
----
-
-## 🧭 Considerações Finais
-
-O foco do projeto foi:
-- cumprir integralmente os requisitos obrigatórios
-- manter o código simples, claro e extensível
-- demonstrar entendimento real de arquitetura full-stack
-
-Decisões de escopo foram feitas de forma consciente e documentadas.
-
----
-
-## 📧 Contato
-
-Projeto desenvolvido como desafio técnico para a Jungle Gaming.
+*Projeto desenvolvido como demonstração de habilidades full-stack com arquitetura de microserviços.*
